@@ -1,0 +1,129 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     >
+<h:head>
+    <title>SSH Generate</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css"/>
+</h:head>
+<h:body>
+
+	<div class="container">
+		<h1>SSH Generate</h1>
+	    <h:form id="form">
+	    	<h:inputText id="userNameInput" value = "#{sshGenBean.userName}" /> 
+	        <h:commandButton class="btn" value="Generate 1" action="#{sshGenBean.shhGen}" >
+	        	<f:ajax execute="userNameInput" render="privateShhKey publicShhKey" />
+	        </h:commandButton>
+	       	<h:commandButton class="btn" value="Generate 2" action="#{sshGenBean.shhGenVar2}" >
+	        	<f:ajax execute="userNameInput" render="privateShhKey publicShhKey" />
+	        </h:commandButton>
+	        <p>Private SHH-key</p>
+	        <h:outputText class="text-field private-key" id="privateShhKey" value="#{sshGenBean.privateShhKey}" style="margin-top:10px; display:block;" />
+	        <button onclick="copyPrivateKey(this)">Kopieren</button>
+	        <h:commandButton value="download Private SSH key" action="#{sshGenBean.downloadPrivateKey}" />
+	        
+	        <p>Public SHH-key</p>
+	        <h:outputText class="text-field" id="publicShhKey" value="#{sshGenBean.publicShhKey}" style="margin-top:10px; display:block;" />
+	    	<button onclick="copyPublicKey(this)">Kopieren</button>
+	    </h:form>
+    </div>
+    
+        <div>
+        <textarea id="textToCopy" rows="4" cols="50">Текст для копирования</textarea>
+    </div>
+
+    <!-- Кнопка для копирования текста -->
+    <button onclick="copyText(this)">Копировать текст</button>
+
+    <script>
+        function copyText(button) {
+            // Находим текстовое поле
+            var textArea = document.getElementById("textToCopy");
+            textArea.select(); // Выделяем текст
+            
+            try {
+                // Копируем текст в буфер обмена
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'Текст успешно скопирован!' : 'Ошибка копирования!';
+                alert(msg);
+            } catch (err) {
+                console.error('Ошибка при копировании текста', err);
+            }
+        }
+    </script>
+    
+    
+    
+
+
+        <!-- JavaScript для копирования текста -->
+        <script type="text/javascript">
+            function copyPrivateKey() {
+                // Получаем элемент по id
+                var textElement = document.getElementById("form:privateShhKey");
+                
+                // Проверяем, существует ли элемент
+                if (textElement) {
+                    // Получаем текстовое содержимое элемента
+                    var textToCopy = textElement.textContent || textElement.innerText;
+                    
+                    // Создаем временный элемент для копирования
+                    var tempInput = document.createElement('textarea');
+                    tempInput.style.position = 'absolute';
+                    tempInput.style.left = '-1000px';
+                    tempInput.value = textToCopy;
+                    document.body.appendChild(tempInput);
+                    
+                    // Выделяем и копируем текст
+                    tempInput.select();
+                    document.execCommand('copy');
+                    
+                    // Удаляем временный элемент
+                    document.body.removeChild(tempInput);
+                    
+                    // Уведомляем пользователя
+                    alert('Текст скопирован: ' );
+                } else {
+                    alert('Не удалось найти элемент для копирования.');
+                }
+            }
+        </script>
+        
+        <script type="text/javascript">
+            function copyPublicKey() {
+                // Получаем элемент по id
+                var textElement = document.getElementById("form:publicShhKey");
+                
+                // Проверяем, существует ли элемент
+                if (textElement) {
+                    // Получаем текстовое содержимое элемента
+                    var textToCopy = textElement.textContent || textElement.innerText;
+                    
+                    // Создаем временный элемент для копирования
+                    var tempInput = document.createElement('textarea');
+                    tempInput.style.position = 'absolute';
+                    tempInput.style.left = '-1000px';
+                    tempInput.value = textToCopy;
+                    document.body.appendChild(tempInput);
+                    
+                    // Выделяем и копируем текст
+                    tempInput.select();
+                    document.execCommand('copy');
+                    
+                    // Удаляем временный элемент
+                    document.body.removeChild(tempInput);
+                    
+                    // Уведомляем пользователя
+                    alert('Текст скопирован: ' );
+                } else {
+                    alert('Не удалось найти элемент для копирования.');
+                }
+            }
+        </script>
+     
+</h:body>
+</html>

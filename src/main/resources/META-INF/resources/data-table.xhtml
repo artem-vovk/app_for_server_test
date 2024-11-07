@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Item List - dataTable</title>
+</h:head>
+<h:body>
+	<h1>Item List - dataTable</h1>
+	<h:dataTable value="#{itemListBean.items}" var="item">
+		<h:column>
+			<f:facet name="header">Item</f:facet>
+            #{item} <!-- Здесь выводим текущее значение элемента массива -->
+		</h:column>
+	</h:dataTable>
+</h:body>
+</html>

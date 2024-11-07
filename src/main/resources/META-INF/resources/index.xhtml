@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<title>Index html</title>
+</h:head>
+<h:body>
+	<h1>Index html</h1>
+	<h:form>
+		<!-- Поле для ввода сообщения -->
+		<h:inputText value="#{indexBean.message}" id="messageInput" />
+
+		<!-- Кнопка с использованием AJAX -->
+		<h:commandButton value="Submit">
+			<!-- Используем AJAX для обновления без перезагрузки страницы -->
+			<f:ajax execute="messageInput" render="outputMessage" />
+		</h:commandButton>
+	</h:form>
+
+	<!-- Вывод введенного сообщения -->
+	<h:outputText value="#{indexBean.message}" id="outputMessage" />
+</h:body>
+</html>
